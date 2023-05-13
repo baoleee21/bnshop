@@ -20,7 +20,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    return bgWidget(child: Scaffold(
+    return bgWidget(
+        child: Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
         child: Column(
@@ -30,40 +31,61 @@ class _LoginScreenState extends State<LoginScreen> {
             10.heightBox,
             "Login to $appname".text.white.fontFamily(bold).size(18).make(),
             15.heightBox,
-
             Column(
               children: [
-                customTextField(title: email,hint: emailHint,isPass: false),
-                customTextField(hint: passwordHint,title: password,isPass: true),
+                customTextField(title: email, hint: emailHint, isPass: false),
+                customTextField(
+                    hint: passwordHint, title: password, isPass: true),
                 Align(
                     alignment: Alignment.centerRight,
-                    child :TextButton(onPressed: (){}, child: forgetPassword.text.make())),
+                    child: TextButton(
+                        onPressed: () {}, child: forgetPassword.text.make())),
                 5.heightBox,
-                ourButton(color: redColor,title: login,textColor: whiteColor,onPress: (){
-                  Get.to(()=>Home());
-                }).box.width(context.screenWidth - 50).make(),
+                ourButton(
+                    color: redColor,
+                    title: login,
+                    textColor: whiteColor,
+                    onPress: () {
+                      Get.to(() => Home());
+                    }).box.width(context.screenWidth - 50).make(),
                 5.heightBox,
                 creatNewAccount.text.color(fontGrey).make(),
                 5.heightBox,
-                ourButton(color: lightGoden,title: sigup,textColor: redColor,onPress: (){
-                  Get.to(()=>SignupScreen());
-                }).box.width(context.screenWidth - 50).make(),
+                ourButton(
+                    color: lightGoden,
+                    title: sigup,
+                    textColor: redColor,
+                    onPress: () {
+                      Get.to(() => const SignupScreen());
+                    }).box.width(context.screenWidth - 50).make(),
                 10.heightBox,
                 loginwith.text.color(fontGrey).make(),
                 5.heightBox,
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center ,
-                  children: List.generate(3, (index) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      backgroundColor: lightGrey,
-                      radius: 25,
-                      child: Image.asset(socialIconList[index],width: 30,),
-                    ),
-                  )),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                      3,
+                      (index) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              backgroundColor: lightGrey,
+                              radius: 25,
+                              child: Image.asset(
+                                socialIconList[index],
+                                width: 30,
+                              ),
+                            ),
+                          )),
                 ),
               ],
-            ).box.white.rounded.padding(const EdgeInsets.all(16)).width(context.screenWidth - 70).shadowSm.make(),
+            )
+                .box
+                .white
+                .rounded
+                .padding(const EdgeInsets.all(16))
+                .width(context.screenWidth - 70)
+                .shadowSm
+                .make(),
           ],
         ),
       ),

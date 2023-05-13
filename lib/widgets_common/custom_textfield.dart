@@ -1,6 +1,6 @@
 import 'package:bnshop/consts/consts.dart';
 
-Widget customTextField({String? title,String? hint,controller,isPass}){
+Widget customTextField({String? title, String? hint, controller, isPass}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -10,7 +10,7 @@ Widget customTextField({String? title,String? hint,controller,isPass}){
         obscureText: isPass,
         controller: controller,
         decoration: InputDecoration(
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
             fontFamily: semibold,
             color: textfieldGrey,
           ),
@@ -19,10 +19,8 @@ Widget customTextField({String? title,String? hint,controller,isPass}){
           fillColor: lightGrey,
           filled: true,
           border: InputBorder.none,
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: redColor
-            ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: redColor),
           ),
         ),
       ),
