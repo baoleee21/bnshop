@@ -27,7 +27,7 @@ const featuredTitle1 = [womenDress,girlsDress,girlsWatches];
 const featuredTitle2 = [boysGlasses,mobilePhone,tShirts];
 
 const categoriesList = [
-  womenDress,menClothingFashion,compAccess,automobile,kidtoys,sports,jewelery,cellphone,furniture,
+  menClothingFashion,compAccess,automobile,kidtoys,sports,cellphone,womenDress,jewelery,furniture,
 ];
 const categoryImages= [
   imgFc1,
@@ -44,3 +44,6 @@ const categoryImages= [
 const itemDetailButtonList =[video,reviews,sellerpolicy,returnpolicy,supportpolicy];
 const profileButtonList = [orders, wishlist, messagse];
 const profileButtonsIcon = [icOrder,icOrder, icMessages];
+
+const paymentMethodImg = [imgPaypal,imgStripe,imgCod];
+const paymentMethods = [paypal,stripe,cod];

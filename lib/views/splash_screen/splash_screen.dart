@@ -1,9 +1,12 @@
 import 'package:bnshop/consts/consts.dart';
 import 'package:bnshop/views/auth_screen/login_screen.dart';
+import 'package:bnshop/views/home_screen/home.dart';
 import 'package:bnshop/widgets_common/applogo_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -12,20 +15,27 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-
   //Creat a method to chage screen : tao phuong thuc de dan den man hinh
-  changeScreen(){
-    Future.delayed(Duration(seconds: 3),(){
-      Get.to(()=>const LoginScreen());
+  changeScreen() {
+    Future.delayed(Duration(seconds: 3), () {
+      // Get.to(()=>const LoginScreen());
+      auth.authStateChanges().listen((User? user) {
+        if(user == null && mounted){
+          Get.to(()=> const LoginScreen());
+        } else{
+          Get.to(()=> const Home());
+        }
+      });
     });
   }
+
   @override
   void initState() {
     // TODO: implement initState
     changeScreen();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Align(
                 alignment: Alignment.topLeft,
-                child:Image.asset(icSplashBg,width: 300)),
+                child: Image.asset(icSplashBg, width: 300)),
             20.heightBox,
             applogoWidget(),
             10.heightBox,

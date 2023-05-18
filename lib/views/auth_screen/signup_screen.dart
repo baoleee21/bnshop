@@ -39,7 +39,7 @@ class _SignupScreenState extends State<SignupScreen> {
             10.heightBox,
             "Join the $appname".text.white.fontFamily(bold).size(18).make(),
             15.heightBox,
-            Column(
+            Obx(() => Column(
               children: [
                 customTextField(
                     title: name,
@@ -78,44 +78,47 @@ class _SignupScreenState extends State<SignupScreen> {
                     Expanded(
                       child: RichText(
                           text: const TextSpan(
-                        children: [
-                          TextSpan(
-                              text: "I agree to the ",
-                              style: TextStyle(
-                                  fontFamily: regular, color: fontGrey)),
-                          TextSpan(
-                              text: termAndCond,
-                              style: TextStyle(
-                                fontFamily: regular,
-                                color: redColor,
-                              )),
-                          TextSpan(
-                              text: " & ",
-                              style: TextStyle(
-                                fontFamily: regular,
-                                color: fontGrey,
-                              )),
-                          TextSpan(
-                              text: privacyPolicy,
-                              style: TextStyle(
-                                fontFamily: regular,
-                                color: redColor,
-                              )),
-                        ],
-                      )),
+                            children: [
+                              TextSpan(
+                                  text: "I agree to the ",
+                                  style: TextStyle(
+                                      fontFamily: regular, color: fontGrey)),
+                              TextSpan(
+                                  text: termAndCond,
+                                  style: TextStyle(
+                                    fontFamily: regular,
+                                    color: redColor,
+                                  )),
+                              TextSpan(
+                                  text: " & ",
+                                  style: TextStyle(
+                                    fontFamily: regular,
+                                    color: fontGrey,
+                                  )),
+                              TextSpan(
+                                  text: privacyPolicy,
+                                  style: TextStyle(
+                                    fontFamily: regular,
+                                    color: redColor,
+                                  )),
+                            ],
+                          )),
                     ),
                   ],
                 ),
-                ourButton(
+                controller.isloading.value? CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(redColor),
+                ): ourButton(
                   color: icCheck == true ? redColor : lightGrey,
                   title: sigup,
                   textColor: whiteColor,
                   onPress: () async {
                     if (icCheck != false) {
+                      controller.isloading(true);
                       try {
                         await controller
                             .signupMethod(emailController.text,
-                                passwordController.text, context)
+                            passwordController.text, context)
                             .then((value) {
                           log(value.toString());
                           return controller.storeUserData(
@@ -131,6 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         log('mess');
                         auth.signOut();
                         VxToast.show(context, msg: e.toString());
+                        controller.isloading(false);
                       }
                     }
                   },
@@ -154,7 +158,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 .padding(const EdgeInsets.all(16))
                 .width(context.screenWidth - 70)
                 .shadowSm
-                .make(),
+                .make(),)
           ],
         ),
       ),

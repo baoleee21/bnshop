@@ -21,12 +21,24 @@ const termAndCond = "Terms and Conditions";
 const alreadyHaveAccount = "Already have an Account?";
 
 //home string
-const home = "Home" ,categories = "Categories",cart = "Cart",account = "Account";
-const searchanything = "Search anything...",todaydeal = "Today's deal",flashsale = "Flash Sale"
-,womenDress="Women Dress",topSellers = "Top Sellers",brand = "Brand",topcategories ="Top Categoties"
-,featuredcatgories = "Featured Categories",girlsWatches = "Girls Watches",mobilePhone = "Mobile Phone",
-    boysGlasses="Boys Glasses",tShirts = "T-Shirts",girlsDress="Girls Dresses",
-    featuredProduct="Featured Product";
+const home = "Home",
+    categories = "Categories",
+    cart = "Cart",
+    account = "Account";
+const searchanything = "Search anything...",
+    todaydeal = "Today's deal",
+    flashsale = "Flash Sale",
+    womenDress = "Women Dress",
+    topSellers = "Top Sellers",
+    brand = "Brand",
+    topcategories = "Top Categoties",
+    featuredcatgories = "Featured Categories",
+    girlsWatches = "Girls Watches",
+    mobilePhone = "Mobile Phone",
+    boysGlasses = "Boys Glasses",
+    tShirts = "T-Shirts",
+    girlsDress = "Girls Dresses",
+    featuredProduct = "Featured Product";
 //categories string
 
 const womenClothing = "Women Clothing",
@@ -41,5 +53,15 @@ const womenClothing = "Women Clothing",
 
 //item details strings
 
-const video ="Video",reviews = "Reviews",sellerpolicy="Seller Policy",returnpolicy="Return Policy",supportpolicy = "Support Policy",productsyoumaylike="Product you may also like";
-const wishlist = "My Wishlist", orders = "My Orders", messagse = "Messages";
+const video = "Video",
+    reviews = "Reviews",
+    sellerpolicy = "Seller Policy",
+    returnpolicy = "Return Policy",
+    supportpolicy = "Support Policy",
+    productsyoumaylike = "Product you may also like";
+const wishlist = "My Wishlist",
+    orders = "My Orders",
+    messagse = "Messages",
+    oldpass = "Old password",
+    newpass = "New password";
+const paypal = "Paypal",stripe ="Stripe",cod="Cash on delivery";

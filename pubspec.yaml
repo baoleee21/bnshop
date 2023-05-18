@@ -42,6 +42,7 @@ dependencies:
   firebase_storage: ^11.1.2
   velocity_x:
   cloud_firestore: ^4.6.0
+  image_picker: ^0.8.7+5
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,7 @@ flutter:
     - assets/
     - assets/icons/
     - assets/images/
+    - lib/services/category_model.json
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
