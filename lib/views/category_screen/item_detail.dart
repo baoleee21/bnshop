@@ -4,6 +4,7 @@ import 'package:bnshop/controller/product_controller.dart';
 import 'package:bnshop/views/chat_screen/chat_screen.dart';
 import 'package:bnshop/widgets_common/our_button.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ItemDetails extends StatelessWidget {
   final String? title;
@@ -323,17 +324,22 @@ class ItemDetails extends StatelessWidget {
             child: ourButton(
               color: redColor,
               onPress: () {
-                controller.addToCart(
-                  color: data['p_colors'][controller.colorIndex.value],
-                  context: context,
-                  vendorID: data['vendor_id'],
-                  img: data['p_img'][0],
-                  qty: controller.quanlity.value,
-                  sellername: data['p_seller'],
-                  title: data['p_name'],
-                  tprice: controller.totalPrice.value,
-                );
-                VxToast.show(context, msg: "Added to cart");
+                if(controller.quanlity.value > 0){
+                  controller.addToCart(
+                    color: data['p_colors'][controller.colorIndex.value],
+                    context: context,
+                    vendorID: data['vendor_id'],
+                    img: data['p_img'][0],
+                    qty: controller.quanlity.value,
+                    sellername: data['p_seller'],
+                    title: data['p_name'],
+                    tprice: controller.totalPrice.value,
+                  );
+                  VxToast.show(context, msg: "Added to cart");
+                }
+                else{
+                  VxToast.show(context, msg: "Number not enough,Requires to add at least 1");
+                }
               },
               textColor: whiteColor,
               title: "Add to cart",

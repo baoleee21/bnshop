@@ -36,7 +36,7 @@ class OrdersScreen extends StatelessWidget {
                     title: data[index]['order_code'].toString().text.color(redColor).fontFamily(semibold).make(),
                     subtitle: data[index]['total_amount'].toString().numCurrency.text.fontFamily(semibold).make(),
                     trailing: IconButton(onPressed: (){
-                          Get.to(()=>const OrderDetails());
+                          Get.to(()=>OrderDetails(data: data[index]));
                     },icon: Icon(Icons.arrow_forward_ios_rounded,color: darkFontGrey)),
                   );
                 },

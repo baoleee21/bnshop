@@ -50,6 +50,7 @@ class CartController extends GetxController{
       'order_delivered':false,
       'order_on_delivery':false,
       'total_amount':totalAmount,
+      'order_data' : FieldValue.serverTimestamp(),
       'orders': FieldValue.arrayUnion(products),
     });
     placingOrder(false);
