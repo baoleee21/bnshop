@@ -24,26 +24,26 @@ class WishlistScreen extends StatelessWidget {
           } else if (snapshot.data!.docs.isEmpty) {
             return "No wishlist yet!".text.color(darkFontGrey).makeCentered();
           } else {
-            var data = snapshot.data!.docs;
+            var Data = snapshot.data!.docs;
             return Column(
               children: [
                 Expanded(
                     child: ListView.builder(
                       shrinkWrap: true,
-                        itemCount: data.length,
+                        itemCount: Data.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
                             leading: Image.network(
-                              '${data[index]['p_img'][0]}',
+                              '${Data[index]['p_img'][0]}',
                               width: 80,
                               fit: BoxFit.cover,
                             ),
-                            title: "${data[index]['p_name']}"
+                            title: "${Data[index]['p_name']}"
                                 .text
                                 .fontFamily(semibold)
                                 .size(16)
                                 .make(),
-                            subtitle: "${data[index]['p_price']}"
+                            subtitle: "${Data[index]['p_price']}"
                                 .numCurrency
                                 .text
                                 .color(redColor)
@@ -54,7 +54,7 @@ class WishlistScreen extends StatelessWidget {
                               Icons.favorite,
                               color: redColor,
                             ).onTap(()async {
-                              await firestore.collection(productCollection).doc(data[index].id).set(
+                              await firestore.collection(productCollection).doc(Data[index].id).set(
                                 {
                                   'p_wishlist':FieldValue.arrayRemove([currentUser!.uid])
                                 },SetOptions(merge: true)

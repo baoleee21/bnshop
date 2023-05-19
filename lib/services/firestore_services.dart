@@ -28,4 +28,26 @@ class FirestoreServices{
   static getAllMessages(){
     return firestore.collection(chatsCollection).where('fromId',isEqualTo: currentUser!.uid).snapshots();
   }
+  static getCounts() async{
+    var res = await Future.wait(
+      {
+        firestore.collection(cartCollection).where('added_by',isEqualTo: currentUser!.uid).get().then((value){
+          return value.docs.length;
+        }),
+        firestore.collection(productCollection).where('p_wishlist',arrayContains: currentUser!.uid).get().then((value){
+          return value.docs.length;
+        }),
+        firestore.collection(orderCollection).where('order_by',isEqualTo: currentUser!.uid).get().then((value){
+          return value.docs.length;
+        }),
+      }
+    );
+    return res;
+  }
+  static allProducts(){
+    return firestore.collection(productCollection).snapshots();
+  }
+  static getFeturedProducts(){
+    return firestore.collection(productCollection).where('isFeatured',isEqualTo:true).get();
+  }
 }

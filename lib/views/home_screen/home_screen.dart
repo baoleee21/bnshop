@@ -1,7 +1,12 @@
 import 'package:bnshop/consts/consts.dart';
 import 'package:bnshop/consts/lists.dart';
+import 'package:bnshop/services/firestore_services.dart';
+import 'package:bnshop/views/category_screen/item_detail.dart';
 import 'package:bnshop/views/home_screen/components/featured_button.dart';
 import 'package:bnshop/widgets_common/home_buttons.dart';
+import 'package:bnshop/widgets_common/loading_indicator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -107,40 +112,53 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     20.heightBox,
 
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      width:double.infinity,
-                      //keo dai  can doi 2 ben
-                      decoration: const BoxDecoration(color: redColor),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          featuredProduct.text.white.fontFamily(bold).size(18).make(),
-                          10.heightBox,
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: List.generate(
-                                  6, (index) => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    imgP1,
-                                    width: 150,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  10.heightBox,
-                                  "Laptop 4Gb/251Gb".text.fontFamily(semibold).color(darkFontGrey).make(),
-                                  10.heightBox,
-                                  "\$600".text.color(redColor).fontFamily(bold).size(16).make(),
-                                  10.heightBox
-                                ],
-                              ).box.white.roundedSM.margin(EdgeInsets.symmetric(horizontal:4)).padding(EdgeInsets.all(8)).make()),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //   padding: const EdgeInsets.all(12),
+                    //   width:double.infinity,
+                    //   //keo dai  can doi 2 ben
+                    //   decoration: const BoxDecoration(color: redColor),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       featuredProduct.text.white.fontFamily(bold).size(18).make(),
+                    //       10.heightBox,
+                    //       SingleChildScrollView(
+                    //         scrollDirection: Axis.horizontal,
+                    //         child: FutureBuilder(
+                    //              future : FirestoreServices.getFeturedProducts(),
+                    //               builder: (context,AsyncSnapshot<QuerySnapshot>snapshot){
+                    //               if(snapshot.hasData){
+                    //                 return loadingIndicator();
+                    //               }else if(snapshot.data!.docs.isEmpty){
+                    //                 return "No products".text.white.makeCentered();
+                    //               }else{
+                    //                 var featuredData = snapshot.data!.docs;
+                    //                 return Row(
+                    //                 children: List.generate(
+                    //                     featuredData.length, (index) => Column(
+                    //                   crossAxisAlignment: CrossAxisAlignment.start,
+                    //                   children: [
+                    //                     Image.network(
+                    //                       featuredData[index]['p_img'][0],
+                    //                       width: 130,
+                    //                       height: 130,
+                    //                       fit: BoxFit.cover,
+                    //                     ),
+                    //                     10.heightBox,
+                    //                     "${featuredData[index]['p_name']}".text.fontFamily(semibold).color(darkFontGrey).make(),
+                    //                     10.heightBox,
+                    //                     "${featuredData[index]['p_price']}".numCurrency.text.color(redColor).fontFamily(bold).size(16).make(),
+                    //                     10.heightBox
+                    //                   ],
+                    //                 ).box.white.roundedSM.margin(EdgeInsets.symmetric(horizontal:4)).padding(EdgeInsets.all(8)).make()),
+                    //               );
+                    //               }
+                    //             },
+                    //         )
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
 
                     //  third swipers
                     20.heightBox,
@@ -156,18 +174,37 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     //  all products section
                     20.heightBox,
-                    GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: 6,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 8,crossAxisSpacing: 8),
-                        itemBuilder: (context,index)
-                        {
-                          return Column(
-                            children: [
-                              Image.asset(imgP5,width: 200,fit: BoxFit.fill,)
-                            ],
-                          ).box.white.roundedSM.make();
-                        })
+                    StreamBuilder(
+                        stream: FirestoreServices.allProducts(),
+                        builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot){
+                          if(snapshot.hasData){
+                            return loadingIndicator();
+                          }else{
+                            var allproducts = snapshot.data!.docs;
+                            return GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: allproducts.length,
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 8,crossAxisSpacing: 8),
+                                itemBuilder: (context,index)
+                                {
+                                  return Column(
+                                    children: [
+                                      Image.network(allproducts[index]['p_img'][0],width: 200,fit: BoxFit.cover,),
+                                      const Spacer(),
+                                      "${allproducts[index]['p_name']}".text.color(darkFontGrey).fontFamily(semibold).make(),
+                                      10.heightBox,
+                                      "${allproducts[index]['p_price']}".text.color(darkFontGrey).fontFamily(semibold).make(),
+                                 ],
+                                  ).box.white.padding(const EdgeInsets.all(12)).margin(const EdgeInsets.symmetric(horizontal: 4)).roundedSM.make()
+                                  .onTap(() {
+                                    Get.to(()=>ItemDetails(title: "${allproducts[index]['p_name']}",data: allproducts[index],));
+                                  })
+                                  ;
+                                });
+                          }
+                        }
+                    )
                   ],
                 ),
               ),

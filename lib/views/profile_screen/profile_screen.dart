@@ -8,6 +8,7 @@ import 'package:bnshop/views/wishlist_screen/wishlist_screen.dart';
 import 'package:bnshop/views/chat_screen/messaging_screen.dart';
 import 'package:bnshop/views/orders_screen/orders_screen.dart';
 import 'package:bnshop/views/profile_screen/edit_profile_screen.dart';
+import 'package:bnshop/widgets_common/loading_indicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:bnshop/widgets_common/bg_widget.dart';
@@ -102,22 +103,33 @@ class ProfileScreen extends StatelessWidget {
                       ),
 
                       20.heightBox,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          detailsCard(
-                              count: "${data['cart_count']}",
-                              title: "in your cart",
-                              width: context.screenWidth / 3.4),
-                          detailsCard(
-                              count: "${data['wishlist_count']}",
-                              title: "in your wishlist",
-                              width: context.screenWidth / 3.4),
-                          detailsCard(
-                              count: "${data['order_count']}",
-                              title: "in your order",
-                              width: context.screenWidth / 3.4),
-                        ],
+                      FutureBuilder(
+                          future: FirestoreServices.getCounts(),
+                          builder: (BuildContext context,AsyncSnapshot snapshot){
+                            if(!snapshot.hasData){
+                              return Center(child: loadingIndicator(),);
+                            }
+                            else{
+                              var countData = snapshot.data;
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  detailsCard(
+                                      count: "${countData[0].toString()}",
+                                      title: "in your cart",
+                                      width: context.screenWidth / 3.4),
+                                  detailsCard(
+                                      count: "${countData[1].toString()}",
+                                      title: "in your wishlist",
+                                      width: context.screenWidth / 3.4),
+                                  detailsCard(
+                                      count: "${countData[2].toString()}",
+                                      title: "in your order",
+                                      width: context.screenWidth / 3.4),
+                                ],
+                              );
+                            }
+                          }
                       ),
 
                       //  buttons section
